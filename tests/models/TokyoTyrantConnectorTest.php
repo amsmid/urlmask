@@ -11,7 +11,7 @@ class TokyoTyrantConnectorTest extends PHPUnit_Framework_TestCase
     {
         if($this->tt === null)
         {
-            $this->tt = new TokyoTyrantConnector('localhost');
+            $this->tt = new TokyoTyrantConnector('localhost', 9999);
         }
         $this->tt->getInstance()->vanish();
         $this->tt->getInstance()->putKeep('test_key', 'test_value');
