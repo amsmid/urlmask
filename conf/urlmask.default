@@ -1,0 +1,14 @@
+[environment]
+env = "production"
+
+[local]
+salt = "hoge"
+tt_host = "localhost"
+tt_port = "19780"
+front_url = "http://localhost"
+
+[production]
+salt = ""
+tt_host = "localhost"
+tt_port = "19780"
+front_url = ""
