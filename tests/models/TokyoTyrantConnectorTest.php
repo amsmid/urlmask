@@ -1,25 +1,25 @@
 <?php // -*- encoding utf-8 -*-
 
-require_once(__DIR__ . '/../../models/HashUrl.php');
+require_once(__DIR__ . '/../../models/TokyoTyrantConnector.php');
 
-class HashUrlTest extends PHPUnit_Framework_TestCase
+class TokyoTyrantConnectorTest extends PHPUnit_Framework_TestCase
 {
 
-    private $hash_url = null;
+    private $tt = null;
 
     public function setUp()
     {
-        if($this->hash_url === null)
+        if($this->tt === null)
         {
-            $this->hash_url = new HashUrl('localhost');
+            $this->tt = new TokyoTyrantConnector('localhost');
         }
-        $this->hash_url->getInstance()->vanish();
-        $this->hash_url->getInstance()->putKeep('test_key', 'test_value');
+        $this->tt->getInstance()->vanish();
+        $this->tt->getInstance()->putKeep('test_key', 'test_value');
     }
 
     public function tearDown()
     {
-        $this->hash_url->getInstance()->vanish();
+        $this->tt->getInstance()->vanish();
     }
 
     /**
@@ -27,7 +27,7 @@ class HashUrlTest extends PHPUnit_Framework_TestCase
     */
     public function testGetValue($key, $expected_value)
     {
-        $this->assertSame($expected_value, $this->hash_url->getValue($key));
+        $this->assertSame($expected_value, $this->tt->getValue($key));
     }
 
 
@@ -41,7 +41,7 @@ class HashUrlTest extends PHPUnit_Framework_TestCase
 
     public function testGetRecordNum()
     {
-        $this->assertSame(1, $this->hash_url->getRecordNum());
+        $this->assertSame(1, $this->tt->getRecordNum());
     }
 
     /**
@@ -49,7 +49,7 @@ class HashUrlTest extends PHPUnit_Framework_TestCase
     */
     public function testSetValue($key, $value, $expected)
     {
-        $this->assertSame($expected, $this->hash_url->setValue($key, $value));
+        $this->assertSame($expected, $this->tt->setValue($key, $value));
     }
 
     public function setValueProvider()
@@ -65,7 +65,7 @@ class HashUrlTest extends PHPUnit_Framework_TestCase
     */
     public function testDeleteValue($key, $expected)
     {
-        $this->assertSame($expected, $this->hash_url->deleteValue($key));
+        $this->assertSame($expected, $this->tt->deleteValue($key));
     }
 
     public function deleteValueProvider()
@@ -78,7 +78,7 @@ class HashUrlTest extends PHPUnit_Framework_TestCase
 
     public function testDeleteAllValues()
     {
-        $this->assertTrue($this->hash_url->deleteAllValues());
+        $this->assertTrue($this->tt->deleteAllValues());
     }
 
     /**
@@ -86,7 +86,7 @@ class HashUrlTest extends PHPUnit_Framework_TestCase
     */
     public function testIsKey($key, $expected)
     {
-        $this->assertSame($expected, HashUrlFacade::testIsKey($key));
+        $this->assertSame($expected, TokyoTyrantConnectorFacade::testIsKey($key));
     }
 
     public function isKeyProvider()
@@ -107,7 +107,7 @@ class HashUrlTest extends PHPUnit_Framework_TestCase
     */
     public function testIsValue($value, $expected)
     {
-        $this->assertSame($expected, HashUrlFacade::testIsValue($value));
+        $this->assertSame($expected, TokyoTyrantConnectorFacade::testIsValue($value));
     }
 
     public function isValueProvider()
@@ -124,7 +124,7 @@ class HashUrlTest extends PHPUnit_Framework_TestCase
     }
 }
 
-class HashUrlFacade extends HashUrl
+class TokyoTyrantConnectorFacade extends TokyoTyrantConnector
 {
     public static function testIsKey($key)
     {

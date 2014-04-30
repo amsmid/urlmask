@@ -1,6 +1,6 @@
 <?php // -*- encoding utf-8 -*-
 
-class HashUrl
+class TokyoTyrantConnector 
 {
 
     const TIMEOUT_SEC = 5.0;
