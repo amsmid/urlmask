@@ -18,8 +18,13 @@ class PageRedirectorController
         }
     }
 
-    public function execute($hash_url)
+    public function execute()
     {
+        $hash_url = '';
+        if(empty($_GET['url']) === false)
+        {
+            $hash_url = $_GET['url'];
+        }
         $tt = new TokyoTyrantConnector(self::$tt_host, self::$tt_port);
         $raw_url = $tt->getValue($hash_url);
         if(is_null($raw_url) === false)
