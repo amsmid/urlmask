@@ -1,0 +1,10 @@
+<Files ~ "^\.(htaccess|htpasswd)$">
+    deny from all
+</Files>
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^/urlmask/api/v1/hash_url/(.*)$ /urlmask/api/v1/hash_url.php?url=$1 [L]
+</IfModule>
+Options -Indexes
+order deny,allow
+
