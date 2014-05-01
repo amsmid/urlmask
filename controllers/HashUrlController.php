@@ -33,7 +33,7 @@ class HashUrlController
             return array('status' => 400, 'message' => 'Invalid parameter.');
         }
 
-        $raw_url = htmlentities($_GET['url'], ENT_QUOTES | ENT_HTML401, 'UTF-8', true);
+        $raw_url = htmlentities($_GET['url'], ENT_QUOTES, 'UTF-8', true);
         if(strlen($raw_url) > self::MAX_URL_LENGTH)
         {
             return array('status' => 414, 'message' => 'URL length must be under ' . self::MAX_URL_LENGTH . ' bytes.');
