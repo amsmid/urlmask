@@ -52,15 +52,22 @@ class HashUrlController
     {
         if(empty(self::$salt) == false && empty(self::$tt_host) === false && empty(self::$tt_port) === false)
         {
-            $hash_url = ShortHashConverter::convertStringToHash($url, self::$salt);
+            $hash_url = ShortHashConverter::convertStringToHash($raw_url, self::$salt);
             $tt = new TokyoTyrantConnector(self::$tt_host, self::$tt_port);
-            if($tt->setValue($hash_url, $raw_url) === true)
+            if(is_null($tt->getValue($hash_url)) === true)
             {
-                return $hash_url;
+                if($tt->setValue($hash_url, $raw_url) === true)
+                {
+                    return $hash_url;
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
-                return null;
+                return $hash_url;
             }
         }
         else
