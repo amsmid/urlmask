@@ -11,7 +11,7 @@ class HashUrlController
     public function __construct($env = 'production')
     {
         $conf = parse_ini_file(__DIR__ . '/../conf/urlmask.ini', true);
-        if(isset($conf[$env]['salt'], $conf[$env]['tt_host'], $conf[$env]['tt_port']) === true && $conf[$env]['front_url'])
+        if(isset($conf[$env]['salt'], $conf[$env]['tt_host'], $conf[$env]['tt_port'], $conf[$env]['front_url']) === true)
         {
             self::$salt = $conf[$env]['salt'];
             self::$tt_host = $conf[$env]['tt_host'];
