@@ -33,7 +33,7 @@ class HashUrlController
             return array('status' => 400, 'message' => 'Invalid parameter.');
         }
 
-        $raw_url = htmlentities($_GET['url'], ENT_QUOTES | ENT_HTML401, 'UTF-8', true);
+        $raw_url = htmlentities($_GET['url'], ENT_QUOTES, 'UTF-8', true);
         if(strlen($raw_url) > self::MAX_URL_LENGTH)
         {
             return array('status' => 414, 'message' => 'URL length must be under ' . self::MAX_URL_LENGTH . ' bytes.');
@@ -52,15 +52,22 @@ class HashUrlController
     {
         if(empty(self::$salt) == false && empty(self::$tt_host) === false && empty(self::$tt_port) === false)
         {
-            $hash_url = ShortHashConverter::convertStringToHash($url, self::$salt);
+            $hash_url = ShortHashConverter::convertStringToHash($raw_url, self::$salt);
             $tt = new TokyoTyrantConnector(self::$tt_host, self::$tt_port);
-            if($tt->setValue($hash_url, $raw_url) === true)
+            if(is_null($tt->getValue($hash_url)) === true)
             {
-                return $hash_url;
+                if($tt->setValue($hash_url, $raw_url) === true)
+                {
+                    return $hash_url;
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
-                return null;
+                return $hash_url;
             }
         }
         else
