@@ -3,17 +3,15 @@
 class PageRedirectorController
 {
 
-    private static $tt_host = '';
-    private static $tt_port = '';
+    private static $api_url = '';
     private static $front_url = '';
 
     public function __construct($env = 'production')
     {
         $conf = parse_ini_file(__DIR__ . '/../conf/urlmask.ini', true);
-        if(isset($conf[$env]['tt_host'], $conf[$env]['tt_port'], $conf[$env]['front_url']) === true)
+        if(isset($conf[$env]['api_url'], $conf[$env]['front_url']) === true)
         {
-            self::$tt_host = $conf[$env]['tt_host'];
-            self::$tt_port = $conf[$env]['tt_port'];
+            self::$api_url = $conf[$env]['api_url'];
             self::$front_url = $conf[$env]['front_url'];
         }
     }
@@ -25,17 +23,16 @@ class PageRedirectorController
         {
             $hash_url = $_GET['url'];
         }
-        $tt = new TokyoTyrantConnector(self::$tt_host, self::$tt_port);
-        $raw_url = $tt->getValue($hash_url);
-        if(is_null($raw_url) === false)
+        $result = json_decode(file_get_contents(self::$api_url . "/raw_url.php?url=$hash_url"));
+        if(empty($result->raw_url) === false)
         {
             header('HTTP/1.1 301');
-            header($raw_url);
+            header('Location: ' . $result->raw_url);
         }
         else
         {
             header('HTTP/1.1 404');
-            header(self::$front_url . '/404');
+            header('Location: ' . self::$front_url . '/404');
         }
     }
 }

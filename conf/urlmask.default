@@ -6,7 +6,8 @@ salt = "hoge"
 tt_host = "localhost"
 tt_port = "19780"
 redirect_url = "http://localhost"
-api_url = "http://localhost"
+api_url = "http://localhost/urlmask/api/v1"
+front_url = "http://localhost/urlmask"
 
 [production]
 salt = ""
@@ -14,3 +15,5 @@ tt_host = "localhost"
 tt_port = "19780"
 redirect_url = ""
 api_url = ""
+front_url = ""
+
