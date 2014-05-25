@@ -5,16 +5,16 @@ class RawUrlController
 
     private static $tt_host = '';
     private static $tt_port = '';
-    private static $front_url = '';
+    private static $redirect_url = '';
 
     public function __construct($env = 'production')
     {
         $conf = parse_ini_file(__DIR__ . '/../conf/urlmask.ini', true);
-        if(isset($conf[$env]['tt_host'], $conf[$env]['tt_port'], $conf[$env]['front_url']) === true)
+        if(isset($conf[$env]['tt_host'], $conf[$env]['tt_port'], $conf[$env]['redirect_url']) === true)
         {
             self::$tt_host = $conf[$env]['tt_host'];
             self::$tt_port = $conf[$env]['tt_port'];
-            self::$front_url = $conf[$env]['front_url'];
+            self::$redirect_url = $conf[$env]['redirect_url'];
         }
     }
 
@@ -29,7 +29,7 @@ class RawUrlController
         $raw_url = $tt->getValue($hash_url);
         if(is_null($raw_url) === false)
         {
-            $result = array('status'=> 200, 'raw_url' => $raw_url, 'hash_url' => self::$front_url . '/' . $hash_url);
+            $result = array('status'=> 200, 'raw_url' => $raw_url, 'hash_url' => self::$redirect_url . '/' . $hash_url);
         }
         else
         {
