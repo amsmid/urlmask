@@ -39,7 +39,7 @@
 
         $("#btn-masking").click(function () {
             url = $("#form-url").val();
-            $.getJSON("api/v1/hash_url.php", {url: url},function(json) {
+            $.getJSON("api/v1/hash_url/" + url, function(json) {
                 $("div.alert").css("display", "none");
                 $("#alert-success").text(json.raw_url + " -> " + json.hash_url);
                 $("#alert-success").show();
