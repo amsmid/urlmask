@@ -17,19 +17,50 @@
     <![endif]-->
   </head>
   <body>
-    <h1>URLMASK - Shortening and masking URL system.</h1>
+    <h1>URLMASK - Shortening and Masking URL system.</h1>
 
     <form class="well">
     <label>URL</label>
     <span class="help-inline">マスキングするURLを入力してね</span>
-    <input type="text" class="span3" placeholder="Type URL...">
-    <button type="submit" class="btn"> Masking! </button>
+    <input type="text" id="form-url" class="span3" placeholder="Type URL...">
+    <button type="button" id="btn-masking" class="btn"> Masking! </button>
     </form>
+    <div id="alert-success" class="alert alert-success"></div>
+    <div id="alert-warning" class="alert alert-warning"></div>
+    <div id="alert-danger" class="alert alert-danger"></div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        $("div.alert").css("display", "none");
+
+        $("#btn-masking").click(function () {
+            url = $("#form-url").val();
+            $.getJSON("api/v1/hash_url.php", {url: url},function(json) {
+                if(json.status == "200") {
+                    $("div.alert").css("display", "none");
+                    $("#alert-success").text(json.raw_url + " -> " + json.hash_url);
+                    $("#alert-success").show();
+                }
+                else if(json.status == "400" || json.status == "414" || json.status == "500") {
+                    alert("aaa");
+                    $("div.alert").css("display", "none");
+                    $("#alert-warning").text("Oops! " + json.message);
+                    $("#alert-warning").show();
+                }
+                else {
+                    $("div.alert").css("display", "none");
+                    $("#alert-danger").text("Error!");
+                    $("#alert-danger").show();
+                }
+            });
+        });
+    });
+    </script>
+
   </body>
 </html>
 
