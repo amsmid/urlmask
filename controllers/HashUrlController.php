@@ -28,7 +28,7 @@ class HashUrlController
 
     private function getRenderData()
     {
-        if(empty($_GET['url']) === true)
+        if(empty($_GET['url']) === true || filter_var($_GET['url'], FILTER_VALIDATE_URL) === false)
         {
             return array('status' => 400, 'message' => 'Invalid parameter.');
         }

@@ -40,15 +40,14 @@
         $("#btn-masking").click(function () {
             url = $("#form-url").val();
             $.getJSON("api/v1/hash_url.php", {url: url},function(json) {
-                if(json.status == "200") {
+                $("div.alert").css("display", "none");
+                $("#alert-success").text(json.raw_url + " -> " + json.hash_url);
+                $("#alert-success").show();
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                if(jqXHR.status == 400 || jqXHR.status == 414 || jqXHR.status == 500) {
                     $("div.alert").css("display", "none");
-                    $("#alert-success").text(json.raw_url + " -> " + json.hash_url);
-                    $("#alert-success").show();
-                }
-                else if(json.status == "400" || json.status == "414" || json.status == "500") {
-                    alert("aaa");
-                    $("div.alert").css("display", "none");
-                    $("#alert-warning").text("Oops! " + json.message);
+                    $("#alert-warning").text("Oops! " + errorThrown);
                     $("#alert-warning").show();
                 }
                 else {
