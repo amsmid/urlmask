@@ -3,8 +3,8 @@
 </Files>
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^/hash_url/(.*)$ hash_url.php?url=$1 [L,QSA]
-    RewriteRule ^/raw_url/(.*)$ raw_url.php?url=$1 [L,QSA]
+    RewriteRule ^hash_url/(.*)$ hash_url.php?url=$1 [L,QSA]
+    RewriteRule ^raw_url/(.*)$ raw_url.php?url=$1 [L,QSA]
 </IfModule>
 Options -Indexes
 order deny,allow

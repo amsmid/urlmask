@@ -28,12 +28,16 @@ class HashUrlController
 
     private function getRenderData()
     {
-        if(empty($_GET['url']) === true || filter_var($_GET['url'], FILTER_VALIDATE_URL) === false)
+        if(empty($_GET['url']) === true)
         {
             return array('status' => 400, 'message' => 'Invalid parameter.');
         }
-
-        $raw_url = htmlentities($_GET['url'], ENT_QUOTES, 'UTF-8', true);
+        $url = str_replace(':/', '://', str_replace('://', ':/', $_GET['url']));
+        if(filter_var($url, FILTER_VALIDATE_URL) === false)
+        {
+            return array('status' => 400, 'message' => 'Invalid parameter.');
+        }
+        $raw_url = htmlentities($url, ENT_QUOTES, 'UTF-8', true);
         if(strlen($raw_url) > self::MAX_URL_LENGTH)
         {
             return array('status' => 414, 'message' => 'URL length must be under ' . self::MAX_URL_LENGTH . ' bytes.');
