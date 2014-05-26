@@ -23,7 +23,7 @@ class PageRedirectorController
         {
             $hash_url = $_GET['url'];
         }
-        $result = json_decode(file_get_contents(self::$api_url . "/raw_url.php?url=$hash_url"));
+        $result = json_decode(file_get_contents(self::$api_url . "/raw_url/$hash_url"));
         if(empty($result->raw_url) === false)
         {
             header('HTTP/1.1 301');
